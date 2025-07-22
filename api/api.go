@@ -33,7 +33,7 @@ func init() {
 		Transport: &http.Transport{
 			TLSClientConfig: &tls.Config{
 				Certificates: []tls.Certificate{tlsCert},
-				MinVersion:   tls.VersionTLS13,
+				MinVersion:   tls.VersionTLS12,
 				MaxVersion:   tls.VersionTLS13,
 			},
 		},
