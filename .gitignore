@@ -6,3 +6,4 @@ loader
 oomph-api-client.crt
 oomph-api-client.key
 oomph_config.hjson
+moderators.list
