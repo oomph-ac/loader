@@ -21,6 +21,8 @@ func main() {
 
 	branch := flag.String("branch", "stable", "The branch to download the Oomph binary from.")
 	useCached := flag.Bool("use-cache", false, "If true, only use the local cache and do not attempt to download the latest Oomph binary.")
+	port := flag.String("port", "", "The port to pass to the Oomph binary.")
+	addr := flag.String("addr", "", "The address to pass to the Oomph binary.")
 	flag.Parse()
 
 	binaryAssetId := fmt.Sprintf("production_binary_%s_%s_%s", *branch, runtime.GOOS, runtime.GOARCH)
@@ -100,7 +102,16 @@ func main() {
 	if err != nil {
 		wd = "." // ?????
 	}
-	cmd, err := os.StartProcess(binaryPath, []string{binaryPath}, &os.ProcAttr{
+	var args []string
+	args = append(args, binaryPath)
+	if *port != "" {
+		args = append(args, "-port", *port)
+	}
+	if *addr != "" {
+		args = append(args, "-addr", *addr)
+	}
+
+	cmd, err := os.StartProcess(binaryPath, args, &os.ProcAttr{
 		Env:   os.Environ(),
 		Files: []*os.File{os.Stdin, os.Stdout, os.Stderr},
 		Dir:   wd,
